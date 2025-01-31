@@ -26,6 +26,10 @@
                 </nav>
             </div>
         </header>
+        <section id = "timeofday">
+            <span>Your current Local Time:</span>
+            <span id="clock"></span>
+        </section>
         <main>
             <h2>Introducing California's Greatest Cliffs</h2>
             <h3>What is so unique about California cliffs?</h3>
@@ -35,8 +39,8 @@
             <p>Located within a 100 mile radius from Irvine, California, they can be reached by roads easily. The closest cliff to Irvine is West Cliff, which is the most popular and most visited.</p>
         </main>
         <section>
-           <!-- <ul id="partners">
-                <li class="partner">
+            <ul id="partners">
+                <!--<li class="partner">
                     <img src="images/partner-bustour.png" alt="Partner Bus Tours">
                 </li>
                 <li class="partner">
@@ -53,8 +57,8 @@
                 </li>
                 <li class="partner">
                     <img src="images/partner-tourgroup.png" alt="Partner Tour Group">
-                </li>
-            </ul>-->
+                </li>-->
+            </ul>
         </section>
         <!-- Footer Section -->
         <footer>
@@ -73,36 +77,85 @@
             </div>
         </footer>
     </div>
+    <!--JavaScript Codes-->
     <script>
-        const partners = [
-            { src: "images/partner-bustour.png", alt: "Partner Bus Tours" },
-            { src: "images/partner-cabinrental.png", alt: "Partner Cabin Rental" },
-            { src: "images/partner-campingadv.png", alt: "Partner Camping Adventure" },
-            { src: "images/partner-collegetours.png", alt: "Partner College Tours" },
-            { src: "images/partner-rentalbike.png", alt: "Partner Bike Rentals" },
-            { src: "images/partner-tourgroup.png", alt: "Partner Tour Group" },
-        ];
+        //Create a time date function
+        function currentTime(){
+            var d = new Date(); //Get the current date
+            var hr = d.getHours();//Get the current hour
+            var min = d.getMinutes(); //Get the current minute
+            var sec = d.getSeconds(); //Get the current second
+            var ampm; //AM or PM
 
-        // Create the partners list dynamically
+            //Add 0 to a single digit seconds
+            if (sec < 10){
+                sec = "0" + sec;
+            }
+            //Add 0 to a single digit minutes
+            if (min < 10){
+                min = "0" + min;
+            }
+            //Determine AM or PM string
+            if(hr == 12){
+                ampm = "PM"; //set to PM
+            }else if(hr > 12){
+                hr -= 12; //Change the hour to 12 hour system
+                ampm = "PM"; //set to PM
+            }else{
+                ampm = "AM"; //set to AM
+            }
+
+            //Assemble time format to display
+            var time = hr + ":" + min + ":" + sec + " " + ampm;
+
+            //Time zone calculation
+            var timeZoneOffset = d.getTimezoneOffset() / 60; //Get the time zone offset in minutes
+            var timeZone; //Time zone string
+
+            //Calculate time difference between UTC and specific city
+            if(timeZoneOffset === 7){
+                timeZone = "PST"; //Pacific Standard Time
+            }else if(timeZoneOffset === 6){
+                timeZone = "MST"; //Mountain Standard Time
+            }else if(timeZoneOffset === 5){
+                timeZone = "EST"; //Eastern Standard Time
+            }else if(timeZoneOffset === 4){
+                timeZone = "CST"; //Central Standard Time
+            }else{
+                timeZone = "GMT"; //Greenwich Mean Time
+            }
+            //Display current local time and time zone on HTML elements
+            document.getElementById("clock").textContent = time + " " + timeZone; //adding time zone
+        }   
+        setInterval(currentTime, 1000); //setting timer
+        //Run the time date function
+        currentTime();
+
+        // Populate the partners list dynamically
         document.addEventListener("DOMContentLoaded", function () {
-            const section = document.querySelector("section");
-            const ul = document.createElement("ul");
-            ul.id = "partners";
-
+            const partners = [
+                { src: "images/partner-bustour.png", alt: "Partner Bus Tours" },
+                { src: "images/partner-cabinrental.png", alt: "Partner Cabin Rental" },
+                { src: "images/partner-campingadv.png", alt: "Partner Camping Adventure" },
+                { src: "images/partner-collegetours.png", alt: "Partner College Tours" },
+                { src: "images/partner-rentalbike.png", alt: "Partner Bike Rentals" },
+                { src: "images/partner-tourgroup.png", alt: "Partner Tour Group" },
+            ];
+            
+            const ul = document.getElementById("partners");
             partners.forEach((partner) => {
                 const li = document.createElement("li");
                 li.className = "partner";
-
+                
                 const img = document.createElement("img");
                 img.src = partner.src;
                 img.alt = partner.alt;
-
+                
                 li.appendChild(img);
                 ul.appendChild(li);
             });
-
-            section.appendChild(ul);
         });
+
     </script>
 </body>
 </html>

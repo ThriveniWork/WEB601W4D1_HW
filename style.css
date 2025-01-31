@@ -295,3 +295,24 @@ footer #disclaimer {
 footer #disclaimer p {
     font-size: 0.85em;
 }
+/* Center the timer and add a background */
+#timeofday {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10px; 
+    background-color: #2a8ae3; 
+    color: white;
+    font-size: 1.5em;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px; /* Rounded corners */
+    margin: 0px; /* Center the section horizontally */
+    width: 90%; /* Adjust the width as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+#clock {
+    font-weight: bold;
+    margin-left: 1px; 
+}
